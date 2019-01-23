@@ -12,10 +12,10 @@ import "fmt"
 //
 //输入: 1->1->2->3->3
 //输出: 1->2->3
-type ListNode struct {
-	Val int
-	Next *ListNode
-}
+//type ListNode struct {
+//	Val int
+//	Next *ListNode
+//}
 
 
 func deleteDuplicates(head *ListNode) *ListNode {
