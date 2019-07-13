@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"unicode"
 )
 
@@ -20,27 +19,52 @@ import (
 //输出: false
 
 func isPalindrome2(s string) bool {
-	var preIndex, lastIndex int
-	preIndex = 0
-	lastIndex = len(s) - 1
-	for lastIndex > 0 && preIndex <= len(s)/2{
-		if !unicode.IsDigit(rune(s[preIndex])) && !unicode.IsLetter(rune(s[preIndex])){
-			preIndex++
+	// 在leetcode测试用例上运行结果是对的，不知道为什么运行就是错的
+	//var words []int32
+	//for _, i := range s{
+	//	if (int(i) >= 48 && int(i) <= 57) || (int(i) >= 65 && int(i) <= 90) || (int(i) >= 97 && int(i) <= 122){
+	//		words = append(words, i)
+	//	}
+	//}
+	//for i := 0; i < len(words) / 2; i++{
+	//	if words[i] != words[len(words) - 1 - i] &&
+	//		words[i] != words[len(words) - 1 -i] - 32 &&
+	//		words[i] - 32 != words[len(words) - 1 - i]{
+	//		return false
+	//	}
+	//}
+	//return true
+
+	var pre, tail int
+	pre = 0
+	tail = len(s) - 1
+	for pre <= tail && pre < len(s) && tail >= 0{
+		if !unicode.IsDigit(rune(s[pre])) && !unicode.IsLetter(rune(s[pre])){
+			pre++
 			continue
-		}else if !unicode.IsDigit(rune(s[lastIndex])) && !unicode.IsLetter(rune(s[lastIndex])){
-			lastIndex--
+		}
+
+		if !unicode.IsDigit(rune(s[tail])) && !unicode.IsLetter(rune(s[tail])){
+			tail--
 			continue
-		}else if s[preIndex] == s[lastIndex] || math.Abs(float64(int(s[preIndex]) - int(s[lastIndex]))) == 32{
-			preIndex++
-			lastIndex--
+		}
+		//fmt.Println(string(s[pre]), string(s[tail]))
+
+		if s[pre] == s[tail] ||
+			(s[pre] == s[tail] - 32 && s[tail] >= 97)||
+			(s[pre] - 32 == s[tail] && s[pre] >= 97){
+			pre++
+			tail--
 		}else{
-			return false
+				return false
 		}
 	}
 	return true
+
 }
 
 func main() {
-	//fmt.Println(isPalindrome2("A man, a plan, a canal: Panama"))
-	fmt.Println(isPalindrome2("\"OP\""))
+	fmt.Println(isPalindrome2("A man, a plan, a canal: Panama"))
+	fmt.Println(isPalindrome2("1Q"))
+	fmt.Println(isPalindrome2(""))
 }

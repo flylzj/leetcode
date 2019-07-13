@@ -37,39 +37,27 @@ import "fmt"
 //print(nums[i]);
 //}
 
+// 2019-7-13
 func removeDuplicates(nums []int) int {
-	if len(nums) == 0{
-		return 0
-	}
-	i := 0
-	for j:=1;j<len(nums);j++{
-		if nums[i] == nums[j]{
-			i++
-			nums[i] = nums[j]
+	// k用来记录重复的次数，把后面没有重复的元素前移k
+	var k int
+	k = 0
+	for i := 1; i < len(nums); i++{
+		if nums[i] != nums[i - 1]{
+			nums[i - k] = nums[i]
+		}else{
+			k++
 		}
 	}
-	fmt.Println(nums)
-	return i+1
-	//var numTmp, numsLen int
-	//numTmp = -1
-	//numsLen = len(nums)
-	//for index:=0; index<numsLen; index++{
-	//	if numTmp != nums[index]{
-	//		nums = append(nums, nums[index])
-	//	}
-	//	numTmp = nums[index]
-	//}
-	//nums = nums[numsLen:]
-	//fmt.Println(nums)
-	//return len(nums)
+	return len(nums) - k
 }
 
 func main() {
 
-	nums := []int{1, 1, 2}
+	nums := []int{1, 1, 2, 2, 2, 2, 2, 2}
 	numsLen := removeDuplicates(nums)
 	fmt.Println(nums)
-	for i:=0;i<numsLen ;i++{
+	for i:=0;i < numsLen ;i++{
 		fmt.Println(nums[i])
 	}
 }
