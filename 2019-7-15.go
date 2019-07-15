@@ -38,49 +38,53 @@ import "fmt"
 链接：https://leetcode-cn.com/problems/game-of-life
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
-
-func gameOfLife(board [][]int)  {
-	var newStatus []int
-	var m, n int
+func gameOfLife(board [][]int){
+	var m, n, i, j, p, q, res int
 	m = len(board)
 	if m == 0{
 		return
 	}
 	n = len(board[0])
-	newStatus = make([]int, m * n)
-	// 遍历board
-	for i:= 0; i < m; i++{
-		for j := 0; j < n; j++{
-			newStatus[i * n + j] = getStatus(board, m, n, i, j)
-		}
-	}
-
-	// 更新状态
-	for i:= 0; i < m; i++{
-		for j := 0; j < n; j++{
-			board[i][j] = newStatus[i * n + j]
-		}
-	}
-}
-
-// 返回下一个时间该细胞的状态
-func getStatus(board [][]int, m, n, i, j int) int {
-	res := 0
-	for p := i - 1; p <= i + 1; p++{
-		for q := j - 1; q <= j + 1; q++{
-			if p >= 0 && q >= 0 && p < m && q < n && (p != i || q != j){
-				res += board[p][q]
+	for i = 0; i < m; i++{
+		for j = 0; j < n; j++{
+			res = 0
+			for p = i-1; p <= i+1; p++{
+				for q = j-1; q <= j+1; q++{
+					if p >= 0 && q >= 0 && p < m && q < n && (p != i || q != j){
+						// -1表示下一状态是从1到0,2表示下一状态是0到1
+						if board[p][q] == -1{
+							res += 1
+						}else if board[p][q] == 2{
+							res += 0
+						}else{
+							res += board[p][q]
+						}
+					}
+				}
+			}
+			if res < 2 || res > 3{
+				if board[i][j] == 1{
+					board[i][j] = -1
+				}
+			}else if res == 3{
+				if board[i][j] == 0{
+					board[i][j] = 2
+				}
 			}
 		}
 	}
-	if res < 2 || res > 3{
-		return 0
-	}else if res == 2{
-		return board[i][j]
-	}else {
-		return 1
+	for i = 0; i < m; i++{
+		for j = 0; j < n; j++{
+			if board[i][j] == -1{
+				board[i][j] = 0
+			}else if board[i][j] == 2{
+				board[i][j] = 1
+			}
+		}
 	}
 }
+
+
 
 func main() {
 	var board [][]int
