@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 /*
@@ -20,14 +19,32 @@ import (
 
 输入: [1,8,6,2,5,4,8,3,7]
 输出: 49
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/container-with-most-water
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
+// 时间 O(n) 空间 O(1)
 func maxArea(height []int) int {
+	var max int
+	p := 0
+	q := len(height) - 1
+	for p < q{
+		if max < getValue(height[p], height[q], q - p){
+			max =  getValue(height[p], height[q], q - p)
+		}
+		if height[p] < height[q]{
+			p++
+		}else{
+				q--
+		}
+	}
+	return max
+}
 
+func getValue(a, b, c int) int{
+	if a > b{
+		return  b * c
+	}else{
+		return a * c
+	}
 }
 
 func main() {

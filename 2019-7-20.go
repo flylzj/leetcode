@@ -20,7 +20,7 @@ import "fmt"
  */
 
 
-type ListNode struct {
+type ListNode4 struct {
 	Val int
 	Next *ListNode
 }

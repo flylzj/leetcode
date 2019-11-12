@@ -2,31 +2,34 @@ package main
 
 import "fmt"
 
-type ListNode4 struct {
+type ListNode struct {
 	Val int
-	Next *ListNode4
+	Next *ListNode
 }
 
 //反转链表
 
-func reverseList(head *ListNode4) *ListNode4 {
-	if head == nil{
+func reverseList(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil{
 		return head
 	}
-	var p, q *ListNode4
+	var p, q, tmp *ListNode
 	p = head
 	q = head.Next
-	for q != nil{
-		PrintListNode(head)
-		p.Next = q.Next
-		q.Next = head
-		head = q
-		q = p.Next
+	p.Next = nil
+	for q.Next != nil{
+		tmp = q.Next
+		q.Next = p
+		p = q
+		q = tmp
+
 	}
+	q.Next = p
+	head = q
 	return head
 }
 
-func PrintListNode(head *ListNode4){
+func PrintListNode(head *ListNode){
 	for head != nil{
 		fmt.Print(head.Val, "->")
 		head = head.Next
@@ -35,15 +38,15 @@ func PrintListNode(head *ListNode4){
 }
 
 func main() {
-	head := reverseList(&ListNode4{
+	head := reverseList(&ListNode{
 		1,
-		&ListNode4{
+		&ListNode{
 			2,
-			&ListNode4{
+			&ListNode{
 				3,
-				&ListNode4{
+				&ListNode{
 					4,
-					&ListNode4{
+					&ListNode{
 						5,
 						nil,
 					},
@@ -51,5 +54,5 @@ func main() {
 			},
 		},
 	})
-	fmt.Println(head.Next.Next.Next.Next)
+	PrintListNode(head)
 }
