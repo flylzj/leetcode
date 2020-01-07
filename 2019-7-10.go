@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-type ListNode struct {
+type ListNode6 struct {
 	Val int
 	Next *ListNode
 }
